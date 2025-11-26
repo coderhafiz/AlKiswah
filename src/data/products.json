@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Blue Senator Wear",
+    "price": 25000.0,
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "category": "Senator Wears",
+    "newArrival": true
+  },
+  {
+    "id": 2,
+    "name": "Green Kampala",
+    "price": 85000.0,
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "category": "Kampala",
+    "newArrival": true
+  },
+  {
+    "id": 3,
+    "name": "White Irish",
+    "price": 60000.0,
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "category": "Irish Wears",
+    "newArrival": true
+  },
+  {
+    "id": 4,
+    "name": "Purple Guinea",
+    "price": 45000.0,
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "category": "Guinea",
+    "newArrival": true
+  },
+  {
+    "id": 5,
+    "name": "5 star Ankara",
+    "price": 55000.0,
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "category": "Ankara",
+    "newArrival": true
+  },
+  {
+    "id": 6,
+    "name": "Rolex",
+    "price": 35000.0,
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "category": "Wristwatches",
+    "newArrival": true
+  },
+  {
+    "id": 7,
+    "name": "Silver Cufflinks",
+    "price": 35000.0,
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "category": "Cufflinks",
+    "newArrival": true
+  }
+]

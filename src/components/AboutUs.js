@@ -5,7 +5,7 @@ export default function AboutUs() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="relative h-64 md:h-96 w-full">
             <img
-              src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=2070&auto=format&fit=crop"
+              src="/IMG-20251204-WA0113.jpg"
               alt="About Al-Kiswah"
               className="w-full h-full object-cover rounded-lg shadow-lg"
             />

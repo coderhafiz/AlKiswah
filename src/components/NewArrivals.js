@@ -6,7 +6,9 @@ import ProductCard from "./ProductCard";
 import products from "../data/products.json";
 
 export default function NewArrivals() {
-  const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay()]);
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }),
+  ]);
   const newArrivals = products.filter((product) => product.newArrival);
 
   if (newArrivals.length === 0) return null;

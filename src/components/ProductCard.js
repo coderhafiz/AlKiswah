@@ -1,14 +1,39 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onImageClick }) {
+  const [origin, setOrigin] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setOrigin(window.location.origin);
+    }
+  }, []);
+
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl hover:shadow-purple-900 transition-shadow duration-300 flex flex-col ">
-      <div className="relative h-64 w-full">
-        <img
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl hover:shadow-purple-900 transition-shadow duration-300 flex flex-col h-full w-full">
+      <div
+        className="relative h-64 w-full cursor-pointer"
+        onClick={() => onImageClick && onImageClick(product)}
+      >
+        <span
+          className={`absolute top-2 right-2 px-3 py-1 text-xs font-bold uppercase rounded-full shadow-md z-10 ${
+            product.available
+              ? "bg-green-500 text-white"
+              : "bg-red-500 text-white"
+          }`}
+        >
+          {product.available ? "In Stock" : "Out of Stock"}
+        </span>
+        <Image
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
         />
       </div>
       <div className="p-6 flex flex-col justify-between flex-1">
@@ -20,20 +45,54 @@ export default function ProductCard({ product }) {
             <h3 className="text-xl md:text-2xl font-semibold text-gray-900">
               {product.name}
             </h3>
+            {product.colors ? (
+              <p className="text-sm text-gray-600 mt-1">
+                Colors: {product.colors}
+              </p>
+            ) : (
+              <Link
+                href={`https://wa.me/2347078746028?text=${encodeURIComponent(
+                  `Hi, Al-Kiswah! Please what colors are available for ${product.name}?\n\nProduct Image: ${origin}${product.image}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-purple-600 underline mt-1 block"
+              >
+                Request for Colors
+              </Link>
+            )}
           </div>
-          <p className="text-lg md:text-xl font-bold text-gray-900">
-            ₦{product.price.toFixed(2)}
-          </p>
+          {product.price > 0 ? (
+            <p className="text-lg md:text-xl font-bold text-gray-900">
+              ₦{product.price.toLocaleString()}{" "}
+              {product.priceUnit && (
+                <span className="text-sm font-normal text-gray-500">
+                  {product.priceUnit}
+                </span>
+              )}
+            </p>
+          ) : (
+            <Link
+              href={`https://wa.me/2347078746028?text=${encodeURIComponent(
+                `Hi, Al-Kiswah! Please can I get the price for ${product.name}?\n\nProduct Image: ${origin}${product.image}`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm md:text-base font-bold text-purple-600 underline"
+            >
+              Request Price
+            </Link>
+          )}
         </div>
         <Link
           href={
             "https://wa.me/2347078746028?text=" +
             encodeURIComponent(
-              `Hi, Al-Kiswah! I'm interested in ${
-                product.name
-              } for ₦${product.price.toFixed(2)}\n\nProduct Image: ${
-                product.image
-              }`
+              `Hi, Al-Kiswah! I'm interested in ${product.name}${
+                product.price > 0
+                  ? ` for ₦${product.price.toLocaleString()}`
+                  : ""
+              }.\n\nProduct Image: ${origin}${product.image}`
             )
           }
           target="_blank"

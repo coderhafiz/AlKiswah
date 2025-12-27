@@ -1,13 +1,17 @@
+import Image from "next/image";
+
 export default function AboutUs() {
   return (
     <section id="about-us" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="relative h-64 md:h-96 w-full">
-            <img
+            <Image
               src="/IMG-20251204-WA0113.jpg"
               alt="About Al-Kiswah"
-              className="w-full h-full object-cover rounded-lg shadow-lg"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover rounded-lg shadow-lg"
             />
           </div>
           <div>

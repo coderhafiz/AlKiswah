@@ -1,58 +1,207 @@
 [
   {
     "id": 1,
-    "name": "Blue Senator Wear",
-    "price": 25000.0,
-    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "category": "Senator Wears",
-    "newArrival": true
+    "name": "5 Star",
+    "price": 0,
+    "image": "/product_images/5 star-brown.jpg",
+    "category": "Fabrics",
+    "colors": "Brown",
+    "newArrival": true,
+    "available": true
   },
   {
     "id": 2,
-    "name": "Green Kampala",
-    "price": 85000.0,
-    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "category": "Kampala",
-    "newArrival": true
+    "name": "7 Star",
+    "price": 0,
+    "image": "/product_images/7 star-various colurs.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
   },
   {
     "id": 3,
-    "name": "White Irish",
-    "price": 60000.0,
-    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "category": "Irish Wears",
-    "newArrival": true
+    "name": "7 Star",
+    "price": 0,
+    "image": "/product_images/7star-emeral green.jpg",
+    "category": "Fabrics",
+    "colors": "Emerald Green",
+    "newArrival": true,
+    "available": true
   },
   {
     "id": 4,
-    "name": "Purple Guinea",
-    "price": 45000.0,
-    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "category": "Guinea",
-    "newArrival": true
+    "name": "Bentlee",
+    "price": 4500.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Bentlee-different colours-18k per 4 yards.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
   },
   {
     "id": 5,
-    "name": "5 star Ankara",
-    "price": 55000.0,
-    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "category": "Ankara",
-    "newArrival": true
+    "name": "Galio",
+    "price": 0,
+    "image": "/product_images/Galio.jpg",
+    "category": "Fabrics",
+    "colors": null,
+    "newArrival": true,
+    "available": true
   },
   {
     "id": 6,
-    "name": "Rolex",
-    "price": 35000.0,
-    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "category": "Wristwatches",
-    "newArrival": true
+    "name": "Irish",
+    "price": 4000.0,
+    "priceUnit": "per yard",
+    "image": "/product_images/Irish-various colours-4k per yard.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
   },
   {
     "id": 7,
-    "name": "Silver Cufflinks",
-    "price": 35000.0,
-    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    "category": "Cufflinks",
-    "newArrival": true
+    "name": "Italian 7 Star Cashmere",
+    "price": 4500.0,
+    "priceUnit": "per yard",
+    "image": "/product_images/Italian 7 star cashmere-various colour-4.5k per yard.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 8,
+    "name": "JU",
+    "price": 6000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/JU-various colours-24k-4yards.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 9,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury life-different colours-16k per 4yards.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 10,
+    "name": "Silver Dust",
+    "price": 0,
+    "image": "/product_images/Silver Dust-white.jpg",
+    "category": "Fabrics",
+    "colors": "White",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 11,
+    "name": "Silver Dust Pattern",
+    "price": 0,
+    "image": "/product_images/Silver dust pattern-various colours.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 12,
+    "name": "Silver Dust",
+    "price": 0,
+    "image": "/product_images/Silver dust-green.jpg",
+    "category": "Fabrics",
+    "colors": "Green",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 13,
+    "name": "TH Wool (2)",
+    "price": 0,
+    "image": "/product_images/TH WOOL (2)-Ash.jpg",
+    "category": "Fabrics",
+    "colors": "Ash",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 14,
+    "name": "TH Wool",
+    "price": 0,
+    "image": "/product_images/TH WOOL-brown.jpg",
+    "category": "Fabrics",
+    "colors": "Brown",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 15,
+    "name": "TH Wool",
+    "price": 0,
+    "image": "/product_images/TH Wool-various colours.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 16,
+    "name": "TR Italian",
+    "price": 0,
+    "image": "/product_images/TR Italian- white.jpg",
+    "category": "Fabrics",
+    "colors": "White",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 17,
+    "name": "UK Plain",
+    "price": 0,
+    "image": "/product_images/Uk plain-various colours.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 18,
+    "name": "GK Plain",
+    "price": 0,
+    "image": "/product_images/gk plain-various colours.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 19,
+    "name": "Silver Dust Plain",
+    "price": 0,
+    "image": "/product_images/silver dust plain-various colours-30k.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 20,
+    "name": "Viscose 9 Star",
+    "price": 0,
+    "image": "/product_images/viscose 9 star-varous colours.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
   }
 ]

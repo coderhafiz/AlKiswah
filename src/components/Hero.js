@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -25,10 +26,13 @@ export default function Hero() {
         <div className="flex h-full">
           {heroImages.map((src, index) => (
             <div className="relative w-full h-full flex-[0_0_100%]" key={index}>
-              <img
+              <Image
                 src={src}
                 alt={`Hero Slide ${index + 1}`}
-                className="w-full h-full object-cover opacity-40"
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover opacity-40"
               />
             </div>
           ))}

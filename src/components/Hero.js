@@ -20,7 +20,7 @@ export default function Hero() {
   ];
 
   return (
-    <div className="relative bg-gray-900 h-[90vh] flex items-center justify-center overflow-hidden">
+    <div className="relative bg-gray-900 min-h-[90vh] h-auto flex items-center justify-center overflow-hidden py-20">
       {/* Background Carousel */}
       <div className="absolute inset-0 z-0" ref={emblaRef}>
         <div className="flex h-full">

@@ -2,19 +2,32 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useInView } from "framer-motion";
 
 export default function ProductCard({ product, onImageClick }) {
   const [origin, setOrigin] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.6 });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setOrigin(window.location.origin);
+      const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+      checkMobile();
+      window.addEventListener("resize", checkMobile);
+      return () => window.removeEventListener("resize", checkMobile);
     }
   }, []);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl hover:shadow-purple-900 transition-shadow duration-300 flex flex-col h-full w-full">
+    <div
+      ref={ref}
+      className={`bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl hover:shadow-purple-900 transition-shadow duration-300 flex flex-col h-full w-full ${
+        isMobile && isInView ? "shadow-2xl shadow-purple-900" : ""
+      }`}
+    >
       <div
         className="relative h-64 w-full cursor-pointer"
         onClick={() => onImageClick && onImageClick(product)}

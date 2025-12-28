@@ -42,11 +42,11 @@
   },
   {
     "id": 5,
-    "name": "Galio",
+    "name": "Viscose 9 Star",
     "price": 0,
-    "image": "/product_images/Galio.jpg",
+    "image": "/product_images/viscose 9 star-varous colours.jpg",
     "category": "Fabrics",
-    "colors": null,
+    "colors": "Available in different colours",
     "newArrival": true,
     "available": true
   },
@@ -148,7 +148,7 @@
     "id": 15,
     "name": "TH Wool",
     "price": 0,
-    "image": "/product_images/TH Wool-various colours.jpg",
+    "image": "/product_images/TH WOOL-various colours.jpg",
     "category": "Fabrics",
     "colors": "Available in different colours",
     "newArrival": true,
@@ -196,11 +196,11 @@
   },
   {
     "id": 20,
-    "name": "Viscose 9 Star",
+    "name": "Galio",
     "price": 0,
-    "image": "/product_images/viscose 9 star-varous colours.jpg",
+    "image": "/product_images/Galio.jpg",
     "category": "Fabrics",
-    "colors": "Available in different colours",
+    "colors": null,
     "newArrival": true,
     "available": true
   }

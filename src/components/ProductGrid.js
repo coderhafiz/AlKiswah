@@ -4,10 +4,45 @@ import Image from "next/image";
 import ProductCard from "./ProductCard";
 import products from "../data/products.json";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useState, useCallback, useMemo } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 
 export default function ProductGrid() {
-  const [selectedProduct, setSelectedProduct] = React.useState(null);
+  const [selectedGroup, setSelectedGroup] = useState(null);
+
+  // Carousel for the modal
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  // Group products by name with custom normalization
+  const groupedProducts = useMemo(() => {
+    const groups = {};
+    products.forEach((product) => {
+      let groupName = product.name;
+
+      // Normalize names for grouping
+      if (product.name.includes("Silver Dust")) {
+        groupName = "Silver Dust";
+      } else if (product.name.includes("TH Wool")) {
+        groupName = "TH Wool";
+      } else if (product.name.includes("7 Star")) {
+        groupName = "7 Star";
+      }
+
+      if (!groups[groupName]) {
+        groups[groupName] = [];
+      }
+      groups[groupName].push(product);
+    });
+    return Object.values(groups);
+  }, []);
 
   return (
     <>
@@ -61,35 +96,42 @@ export default function ProductGrid() {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 ">
-            {products.map((product) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="flex "
-              >
-                <ProductCard
-                  product={product}
-                  onImageClick={setSelectedProduct}
-                />
-              </motion.div>
-            ))}
+            {groupedProducts.map((group) => {
+              const product = group[0]; // Display the first product of the group
+              return (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="flex "
+                >
+                  <ProductCard
+                    product={product}
+                    onImageClick={() => setSelectedGroup(group)}
+                  />
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Full Screen Image Modal */}
-      {selectedProduct && (
+      {/* Full Screen Image Carousel Modal */}
+      {selectedGroup && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
-          onClick={() => setSelectedProduct(null)}
+          onClick={() => setSelectedGroup(null)}
         >
-          <div className="relative max-w-4xl w-full h-full flex items-center justify-center">
+          <div
+            className="relative w-full max-w-4xl h-full flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content area
+          >
+            {/* Close Button - Outside the carousel but clear */}
             <button
-              className="absolute top-4 right-4 text-white hover:text-gray-300 z-50 p-2 bg-gray-800 rounded-full bg-opacity-50"
-              onClick={() => setSelectedProduct(null)}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 z-[60] p-2 bg-gray-800 rounded-full bg-opacity-50"
+              onClick={() => setSelectedGroup(null)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -106,15 +148,81 @@ export default function ProductGrid() {
                 />
               </svg>
             </button>
-            <Image
-              src={selectedProduct.image}
-              alt={selectedProduct.name}
-              fill
-              className="object-contain rounded-lg shadow-2xl"
-              sizes="100vw"
-              onClick={(e) => e.stopPropagation()}
-            />
+
+            {/* Carousel Content */}
+            <div className="overflow-hidden w-full h-[80vh]" ref={emblaRef}>
+              <div className="flex h-full">
+                {selectedGroup.map((item, index) => (
+                  <div
+                    className="flex-[0_0_100%] h-full relative"
+                    key={item.id || index}
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center p-4">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-contain rounded-lg"
+                        sizes="(max-width: 768px) 100vw, 80vw"
+                        priority={index === 0}
+                      />
+                    </div>
+                    {/* Caption if needed */}
+                    {item.colors && (
+                      <div className="absolute bottom-4 left-0 right-0 text-center text-white bg-black/50 p-2">
+                        {item.colors}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation Buttons (Only if more than 1 image) */}
+            {selectedGroup.length > 1 && (
+              <>
+                <button
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors z-[60]"
+                  onClick={scrollPrev}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-8 h-8"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 19.5L8.25 12l7.5-7.5"
+                    />
+                  </svg>
+                </button>
+                <button
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors z-[60]"
+                  onClick={scrollNext}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-8 h-8"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </button>
+              </>
+            )}
           </div>
+          {/* Background overlay click handler is on the parent div */}
         </div>
       )}
     </>

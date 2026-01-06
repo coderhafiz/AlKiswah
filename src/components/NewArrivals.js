@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import ProductCard from "./ProductCard";
@@ -10,10 +10,18 @@ import products from "../data/products.json";
 
 export default function NewArrivals() {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [emblaRef] = useEmblaCarousel({ loop: true }, [
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }),
   ]);
   const newArrivals = products.filter((product) => product.newArrival);
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   if (newArrivals.length === 0) return null;
 
@@ -29,20 +37,64 @@ export default function NewArrivals() {
               Fresh styles just for you.
             </p>
           </div>
-          <div className="overflow-hidden py-4 md:py-16 px-3" ref={emblaRef}>
-            <div className="flex">
-              {newArrivals.map((product) => (
-                <div
-                  className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%] px-4"
-                  key={product.id}
-                >
-                  <ProductCard
-                    product={product}
-                    onImageClick={setSelectedProduct}
-                  />
-                </div>
-              ))}
+          <div className="relative group">
+            <div className="overflow-hidden py-4 md:py-16 px-3" ref={emblaRef}>
+              <div className="flex">
+                {newArrivals.map((product) => (
+                  <div
+                    className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%] px-4"
+                    key={product.id}
+                  >
+                    <ProductCard
+                      product={product}
+                      onImageClick={setSelectedProduct}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Mobile Navigation Buttons */}
+            <button
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md z-10 md:hidden hover:bg-white"
+              onClick={scrollPrev}
+              aria-label="Previous slide"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6 text-gray-800"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+            </button>
+            <button
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md z-10 md:hidden hover:bg-white"
+              onClick={scrollNext}
+              aria-label="Next slide"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6 text-gray-800"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </section>

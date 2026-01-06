@@ -3,7 +3,7 @@
 import Image from "next/image";
 import ProductCard from "./ProductCard";
 import products from "../data/products.json";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, useCallback, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
@@ -119,112 +119,121 @@ export default function ProductGrid() {
       </section>
 
       {/* Full Screen Image Carousel Modal */}
-      {selectedGroup && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
-          onClick={() => setSelectedGroup(null)}
-        >
-          <div
-            className="relative w-full max-w-4xl h-full flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content area
+      <AnimatePresence>
+        {selectedGroup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
+            onClick={() => setSelectedGroup(null)}
           >
-            {/* Close Button - Outside the carousel but clear */}
-            <button
-              className="absolute top-4 right-4 text-white hover:text-gray-300 z-[60] p-2 bg-gray-800 rounded-full bg-opacity-50"
-              onClick={() => setSelectedGroup(null)}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="relative w-full max-w-4xl h-full flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content area
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+              {/* Close Button - Outside the carousel but clear */}
+              <button
+                className="absolute top-4 right-4 text-white hover:text-gray-300 z-[60] p-2 bg-gray-800 rounded-full bg-opacity-50"
+                onClick={() => setSelectedGroup(null)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
 
-            {/* Carousel Content */}
-            <div className="overflow-hidden w-full h-[80vh]" ref={emblaRef}>
-              <div className="flex h-full">
-                {selectedGroup.map((item, index) => (
-                  <div
-                    className="flex-[0_0_100%] h-full relative"
-                    key={item.id || index}
-                  >
-                    <div className="absolute inset-0 flex items-center justify-center p-4">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-contain rounded-lg"
-                        sizes="(max-width: 768px) 100vw, 80vw"
-                        priority={index === 0}
-                      />
-                    </div>
-                    {/* Caption if needed */}
-                    {item.colors && (
-                      <div className="absolute bottom-4 left-0 right-0 text-center text-white bg-black/50 p-2">
-                        {item.colors}
+              {/* Carousel Content */}
+              <div className="overflow-hidden w-full h-[80vh]" ref={emblaRef}>
+                <div className="flex h-full">
+                  {selectedGroup.map((item, index) => (
+                    <div
+                      className="flex-[0_0_100%] h-full relative"
+                      key={item.id || index}
+                    >
+                      <div className="absolute inset-0 flex items-center justify-center p-4">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          className="object-contain rounded-lg"
+                          sizes="(max-width: 768px) 100vw, 80vw"
+                          priority={index === 0}
+                        />
                       </div>
-                    )}
-                  </div>
-                ))}
+                      {/* Caption if needed */}
+                      {item.colors && (
+                        <div className="absolute bottom-4 left-0 right-0 text-center text-white bg-black/50 p-2">
+                          {item.colors}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Navigation Buttons (Only if more than 1 image) */}
-            {selectedGroup.length > 1 && (
-              <>
-                <button
-                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors z-[60]"
-                  onClick={scrollPrev}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="w-8 h-8"
+              {/* Navigation Buttons (Only if more than 1 image) */}
+              {selectedGroup.length > 1 && (
+                <>
+                  <button
+                    className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors z-[60]"
+                    onClick={scrollPrev}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 19.5L8.25 12l7.5-7.5"
-                    />
-                  </svg>
-                </button>
-                <button
-                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors z-[60]"
-                  onClick={scrollNext}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                    className="w-8 h-8"
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="w-8 h-8"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 19.5L8.25 12l7.5-7.5"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors z-[60]"
+                    onClick={scrollNext}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                    />
-                  </svg>
-                </button>
-              </>
-            )}
-          </div>
-          {/* Background overlay click handler is on the parent div */}
-        </div>
-      )}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="w-8 h-8"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                      />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </motion.div>
+            {/* Background overlay click handler is on the parent div */}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

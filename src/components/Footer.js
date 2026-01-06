@@ -109,7 +109,7 @@ export default function Footer() {
             </p>
             <p className="text-gray-400 text-base md:text-lg mb-2">
               <Link
-                href="alkiswahclothings@gmail.com"
+                href="mailto:alkiswahclothings@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition"

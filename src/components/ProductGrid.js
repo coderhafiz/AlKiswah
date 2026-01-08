@@ -6,9 +6,11 @@ import products from "../data/products.json";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, useCallback, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import { useRouter, useParams } from "next/navigation";
 
 export default function ProductGrid() {
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  const router = useRouter();
+  const params = useParams();
 
   // Carousel for the modal
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -43,6 +45,45 @@ export default function ProductGrid() {
     });
     return Object.values(groups);
   }, []);
+
+  // Derive selected group from URL slug
+  // Route structure: /collection/[name]
+  const selectedGroup = useMemo(() => {
+    if (params?.slug?.[0] === "collection" && params?.slug?.[1]) {
+      const collectionName = decodeURIComponent(params.slug[1]);
+
+      // Find the group where the first product's name (grouped logic) matches or normalized
+      return (
+        groupedProducts.find((group) => {
+          const product = group[0];
+          let groupName = product.name;
+          // Re-apply normalization logic to match what was likely passed
+          if (product.name.includes("Silver Dust")) groupName = "Silver Dust";
+          else if (product.name.includes("TH Wool")) groupName = "TH Wool";
+          else if (product.name.includes("7 Star")) groupName = "7 Star";
+
+          return groupName === collectionName;
+        }) || null
+      );
+    }
+    return null;
+  }, [groupedProducts, params]);
+
+  const handleGroupClick = (group) => {
+    const product = group[0];
+    let groupName = product.name;
+    if (product.name.includes("Silver Dust")) groupName = "Silver Dust";
+    else if (product.name.includes("TH Wool")) groupName = "TH Wool";
+    else if (product.name.includes("7 Star")) groupName = "7 Star";
+
+    router.push(`/collection/${encodeURIComponent(groupName)}`, {
+      scroll: false,
+    });
+  };
+
+  const handleCloseModal = () => {
+    router.push("/", { scroll: false });
+  };
 
   return (
     <>
@@ -109,7 +150,7 @@ export default function ProductGrid() {
                 >
                   <ProductCard
                     product={product}
-                    onImageClick={() => setSelectedGroup(group)}
+                    onImageClick={() => handleGroupClick(group)}
                   />
                 </motion.div>
               );
@@ -126,7 +167,7 @@ export default function ProductGrid() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
-            onClick={() => setSelectedGroup(null)}
+            onClick={handleCloseModal}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -138,8 +179,8 @@ export default function ProductGrid() {
             >
               {/* Close Button - Outside the carousel but clear */}
               <button
-                className="absolute top-4 right-4 text-white hover:text-gray-300 z-[60] p-2 bg-gray-800 rounded-full bg-opacity-50"
-                onClick={() => setSelectedGroup(null)}
+                className="absolute top-4 md:top-24 right-4 text-white hover:text-gray-300 z-[60] p-2 bg-gray-800 rounded-full bg-opacity-50"
+                onClick={handleCloseModal}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

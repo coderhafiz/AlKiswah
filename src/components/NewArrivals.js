@@ -2,19 +2,39 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import ProductCard from "./ProductCard";
 import products from "../data/products.json";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter, useParams } from "next/navigation";
 
 export default function NewArrivals() {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const router = useRouter();
+  const params = useParams();
+
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }),
   ]);
   const newArrivals = products.filter((product) => product.newArrival);
+
+  // Derive selected product from URL slug
+  // Route structure: /product/[id]
+  const selectedProduct = useMemo(() => {
+    if (params?.slug?.[0] === "product" && params?.slug?.[1]) {
+      return products.find((p) => p.id.toString() === params.slug[1]);
+    }
+    return null;
+  }, [params]);
+
+  const handleProductClick = (product) => {
+    router.push(`/product/${product.id}`, { scroll: false });
+  };
+
+  const handleCloseModal = () => {
+    router.push("/", { scroll: false });
+  };
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -48,7 +68,7 @@ export default function NewArrivals() {
                   >
                     <ProductCard
                       product={product}
-                      onImageClick={setSelectedProduct}
+                      onImageClick={handleProductClick}
                     />
                   </div>
                 ))}
@@ -108,7 +128,7 @@ export default function NewArrivals() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
-            onClick={() => setSelectedProduct(null)}
+            onClick={handleCloseModal}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -118,8 +138,8 @@ export default function NewArrivals() {
               className="relative max-w-4xl w-full h-full flex items-center justify-center"
             >
               <button
-                className="absolute top-4 right-4 text-white hover:text-gray-300 z-50 p-2 bg-gray-800 rounded-full bg-opacity-50"
-                onClick={() => setSelectedProduct(null)}
+                className="absolute top-4 md:top-24 right-4 text-white hover:text-gray-300 z-50 p-2 bg-gray-800 rounded-full bg-opacity-50"
+                onClick={handleCloseModal}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

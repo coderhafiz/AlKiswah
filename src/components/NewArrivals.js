@@ -8,33 +8,13 @@ import Autoplay from "embla-carousel-autoplay";
 import ProductCard from "./ProductCard";
 import products from "../data/products.json";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 export default function NewArrivals() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true }),
   ]);
   const newArrivals = products.filter((product) => product.newArrival);
-
-  // Derive selected product from URL
-  const selectedProduct = searchParams.get("newArrival")
-    ? products.find((p) => p.id.toString() === searchParams.get("newArrival"))
-    : null;
-
-  const handleProductClick = (product) => {
-    // Create new params to append
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("newArrival", product.id);
-    router.push(pathname + "?" + params.toString(), { scroll: false });
-  };
-
-  const handleCloseModal = () => {
-    router.back();
-  };
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -68,7 +48,7 @@ export default function NewArrivals() {
                   >
                     <ProductCard
                       product={product}
-                      onImageClick={handleProductClick}
+                      onImageClick={setSelectedProduct}
                     />
                   </div>
                 ))}
@@ -128,7 +108,7 @@ export default function NewArrivals() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
-            onClick={handleCloseModal}
+            onClick={() => setSelectedProduct(null)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -139,7 +119,7 @@ export default function NewArrivals() {
             >
               <button
                 className="absolute top-4 right-4 text-white hover:text-gray-300 z-50 p-2 bg-gray-800 rounded-full bg-opacity-50"
-                onClick={handleCloseModal}
+                onClick={() => setSelectedProduct(null)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

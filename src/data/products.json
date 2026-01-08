@@ -203,5 +203,104 @@
     "colors": null,
     "newArrival": true,
     "available": true
+  },
+  {
+    "id": 21,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury.jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 22,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury (2).jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 23,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury (3).jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 24,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury (4).jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 25,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury (5).jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 26,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury (6).jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 27,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury (7).jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 28,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury (8).jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
+  },
+  {
+    "id": 29,
+    "name": "Luxury Life",
+    "price": 4000.0,
+    "priceUnit": "per 4 yards",
+    "image": "/product_images/Luxury (9).jpg",
+    "category": "Fabrics",
+    "colors": "Available in different colours",
+    "newArrival": true,
+    "available": true
   }
 ]

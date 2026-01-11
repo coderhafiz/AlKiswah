@@ -50,7 +50,7 @@ export default function ProductCard({ product, onImageClick }) {
         />
       </div>
       <div className="p-6 flex flex-col justify-between flex-1">
-        <div className="flex justify-between items-start mb-2">
+        <div className="flex flex-col items-start mb-2 flex-1 w-full">
           <div>
             <p className="text-sm md:text-base text-gray-500 mb-1">
               {product.category}
@@ -76,7 +76,7 @@ export default function ProductCard({ product, onImageClick }) {
             )}
           </div>
           {product.price > 0 ? (
-            <p className="text-lg md:text-xl font-bold text-gray-900">
+            <p className="text-lg md:text-xl font-bold text-gray-900 mt-auto pt-4">
               ₦{product.price.toLocaleString()}{" "}
               {product.priceUnit && (
                 <span className="text-sm font-normal text-gray-500">
@@ -91,7 +91,7 @@ export default function ProductCard({ product, onImageClick }) {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm md:text-base font-bold text-purple-600 underline"
+              className="text-sm md:text-base font-bold text-purple-600 underline mt-auto pt-4"
             >
               Request Price
             </Link>

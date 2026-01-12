@@ -69,6 +69,7 @@ export default function NewArrivals() {
                     <ProductCard
                       product={product}
                       onImageClick={handleProductClick}
+                      minimalOnMobile={true}
                     />
                   </div>
                 ))}

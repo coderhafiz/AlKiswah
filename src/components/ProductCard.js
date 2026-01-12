@@ -5,7 +5,12 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useInView } from "framer-motion";
 
-export default function ProductCard({ product, onImageClick, imageCount = 0 }) {
+export default function ProductCard({
+  product,
+  onImageClick,
+  imageCount = 0,
+  minimalOnMobile = false,
+}) {
   const [origin, setOrigin] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const ref = useRef(null);
@@ -79,7 +84,11 @@ export default function ProductCard({ product, onImageClick, imageCount = 0 }) {
               {product.name}
             </h3>
             {product.colors ? (
-              <p className="text-sm text-gray-600 mt-1">
+              <p
+                className={`text-sm text-gray-600 mt-1 ${
+                  minimalOnMobile ? "hidden md:block" : ""
+                }`}
+              >
                 Colors: {product.colors}
               </p>
             ) : (
@@ -89,33 +98,37 @@ export default function ProductCard({ product, onImageClick, imageCount = 0 }) {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-purple-600 underline mt-1 block"
+                className={`text-sm text-purple-600 underline mt-1 block ${
+                  minimalOnMobile ? "hidden md:block" : ""
+                }`}
               >
                 Request for Colors
               </Link>
             )}
           </div>
-          {product.price > 0 ? (
-            <p className="text-lg md:text-xl font-bold text-gray-900 mt-auto pt-4">
-              ₦{product.price.toLocaleString()}{" "}
-              {product.priceUnit && (
-                <span className="text-sm font-normal text-gray-500">
-                  {product.priceUnit}
-                </span>
-              )}
-            </p>
-          ) : (
-            <Link
-              href={`https://wa.me/2347078746028?text=${encodeURIComponent(
-                `Hi, Al-Kiswah! Please can I get the price for ${product.name}?\n\nProduct Image: ${origin}${product.image}`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm md:text-base font-bold text-purple-600 underline mt-auto pt-4"
-            >
-              Request Price
-            </Link>
-          )}
+          <div className={minimalOnMobile ? "hidden md:block" : "block"}>
+            {product.price > 0 ? (
+              <p className="text-lg md:text-xl font-bold text-gray-900 mt-auto pt-4">
+                ₦{product.price.toLocaleString()}{" "}
+                {product.priceUnit && (
+                  <span className="text-sm font-normal text-gray-500">
+                    {product.priceUnit}
+                  </span>
+                )}
+              </p>
+            ) : (
+              <Link
+                href={`https://wa.me/2347078746028?text=${encodeURIComponent(
+                  `Hi, Al-Kiswah! Please can I get the price for ${product.name}?\n\nProduct Image: ${origin}${product.image}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm md:text-base font-bold text-purple-600 underline mt-auto pt-4"
+              >
+                Request Price
+              </Link>
+            )}
+          </div>
         </div>
         <Link
           href={
@@ -130,7 +143,9 @@ export default function ProductCard({ product, onImageClick, imageCount = 0 }) {
           }
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full text-center bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 px-4 md:py-3 md:px-6 rounded mt-4 md:mt-6 text-base md:text-lg transition duration-300 flex items-center justify-center gap-2"
+          className={`w-full text-center bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 px-4 md:py-3 md:px-6 rounded mt-4 md:mt-6 text-base md:text-lg transition duration-300 flex items-center justify-center gap-2 ${
+            minimalOnMobile ? "hidden md:flex" : "flex"
+          }`}
         >
           Buy Now
           <svg

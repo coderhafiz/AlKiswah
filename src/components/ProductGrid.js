@@ -14,6 +14,26 @@ export default function ProductGrid() {
 
   // Carousel for the modal
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState([]);
+
+  const onSelect = useCallback((emblaApi) => {
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, []);
+
+  React.useEffect(() => {
+    if (!emblaApi) return;
+
+    onSelect(emblaApi);
+    setScrollSnaps(emblaApi.scrollSnapList());
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
+  }, [emblaApi, setScrollSnaps, onSelect]);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -22,6 +42,11 @@ export default function ProductGrid() {
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
+
+  const scrollTo = useCallback(
+    (index) => emblaApi && emblaApi.scrollTo(index),
+    [emblaApi]
+  );
 
   // Group products by name with custom normalization
   const groupedProducts = useMemo(() => {
@@ -46,7 +71,6 @@ export default function ProductGrid() {
     return Object.values(groups);
   }, []);
 
-  // Derive selected group from URL slug
   // Route structure: /collection/[name]
   const selectedGroup = useMemo(() => {
     if (params?.slug?.[0] === "collection" && params?.slug?.[1]) {
@@ -91,7 +115,7 @@ export default function ProductGrid() {
         className="relative py-16 bg-purple-100 overflow-hidden"
         id="products"
       >
-        {/* Animated Pattern Background */}
+        {/* ... existing SVG pattern ... */}
         <div className="absolute inset-0 opacity-30 overflow-hidden">
           <div className="absolute inset-0 w-[200%] h-full animate-[slidePattern_200s_linear_infinite]">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +128,6 @@ export default function ProductGrid() {
                   height="40"
                   patternUnits="userSpaceOnUse"
                 >
-                  {/* Diagonal lines going down-right */}
                   <path
                     d="M0 40L40 0M-10 10L10 -10M30 50L50 30"
                     stroke="rgb(168, 85, 247)"
@@ -112,7 +135,6 @@ export default function ProductGrid() {
                     fill="none"
                     opacity="0.4"
                   />
-                  {/* Diagonal lines going down-left (crossing) */}
                   <path
                     d="M0 0L40 40M-10 30L10 50M30 -10L50 10"
                     stroke="rgb(168, 85, 247)"
@@ -136,20 +158,21 @@ export default function ProductGrid() {
               Handpicked items just for you.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 ">
-            {groupedProducts.map((group) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+            {groupedProducts.map((group, index) => {
               const product = group[0]; // Display the first product of the group
               return (
                 <motion.div
                   key={product.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
+                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: (index % 4) * 0.1 }}
                   className="flex "
                 >
                   <ProductCard
                     product={product}
+                    imageCount={group.length}
                     onImageClick={() => handleGroupClick(group)}
                   />
                 </motion.div>
@@ -174,7 +197,7 @@ export default function ProductGrid() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="relative w-full max-w-4xl h-full flex items-center justify-center"
+              className="relative w-full max-w-4xl h-full flex flex-col items-center justify-center"
               onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content area
             >
               {/* Close Button - Outside the carousel but clear */}
@@ -216,15 +239,23 @@ export default function ProductGrid() {
                           priority={index === 0}
                         />
                       </div>
-                      {/* Caption if needed */}
-                      {item.colors && (
-                        <div className="absolute bottom-4 left-0 right-0 text-center text-white bg-black/50 p-2">
-                          {item.colors}
-                        </div>
-                      )}
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Dots Navigation */}
+              <div className="flex justify-center gap-2 mt-4 z-[60]">
+                {scrollSnaps.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => scrollTo(index)}
+                    className={`w-3 h-3 rounded-full transition-colors ${
+                      index === selectedIndex ? "bg-white" : "bg-white/40"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
               </div>
 
               {/* Navigation Buttons (Only if more than 1 image) */}

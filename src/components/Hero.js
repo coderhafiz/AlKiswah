@@ -41,7 +41,12 @@ export default function Hero() {
 
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
         <div className="md:hidden mb-8">
-          <h1 className="text-4xl font-bold text-purple-600">Al-Kiswah</h1>
+          <h1
+            className="text-4xl font-bold text-purple-600 text-shadow-md text-shadow-black"
+            // style={{ WebkitTextStroke: "1px white" }}
+          >
+            Al-Kiswah
+          </h1>
         </div>
         <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tight mb-6">
           Elevate Your Style

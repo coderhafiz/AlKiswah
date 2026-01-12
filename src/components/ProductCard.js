@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useInView } from "framer-motion";
 
-export default function ProductCard({ product, onImageClick }) {
+export default function ProductCard({ product, onImageClick, imageCount = 0 }) {
   const [origin, setOrigin] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const ref = useRef(null);
@@ -41,6 +41,26 @@ export default function ProductCard({ product, onImageClick }) {
         >
           {product.available ? "In Stock" : "Out of Stock"}
         </span>
+
+        {imageCount > 1 && (
+          <div className="absolute top-2 left-2 px-2 py-1 bg-black/50 rounded-full flex items-center gap-1 z-10">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-4 h-4 text-white"
+            >
+              <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
+              <path
+                fillRule="evenodd"
+                d="M9.375 6C9.67 6 9.93 5.8 10.054 5.503a10.537 10.537 0 013.892 0c.124.297.384.497.68.497h1.25a3.75 3.75 0 013.75 3.75v5.75a3.75 3.75 0 01-3.75 3.75h-11.5a3.75 3.75 0 01-3.75-3.75V9.75A3.75 3.75 0 014.125 6h1.25zM12 18a5.25 5.25 0 100-10.5 5.25 5.25 0 000 10.5z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <span className="text-white text-xs font-bold">{imageCount}</span>
+          </div>
+        )}
+
         <Image
           src={product.image}
           alt={product.name}

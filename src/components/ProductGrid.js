@@ -158,7 +158,7 @@ export default function ProductGrid() {
               Handpicked items just for you.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-12">
             {groupedProducts.map((group, index) => {
               const product = group[0]; // Display the first product of the group
               return (
@@ -174,6 +174,7 @@ export default function ProductGrid() {
                     product={product}
                     imageCount={group.length}
                     onImageClick={() => handleGroupClick(group)}
+                    compact={true}
                   />
                 </motion.div>
               );

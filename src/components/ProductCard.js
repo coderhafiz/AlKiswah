@@ -10,6 +10,7 @@ export default function ProductCard({
   onImageClick,
   imageCount = 0,
   minimalOnMobile = false,
+  compact = false,
 }) {
   const [origin, setOrigin] = useState("");
   const [isMobile, setIsMobile] = useState(false);
@@ -34,7 +35,9 @@ export default function ProductCard({
       }`}
     >
       <div
-        className="relative h-64 w-full cursor-pointer"
+        className={`relative w-full cursor-pointer ${
+          compact ? "h-40 md:h-64" : "h-64"
+        }`}
         onClick={() => onImageClick && onImageClick(product)}
       >
         <span
@@ -74,13 +77,25 @@ export default function ProductCard({
           className="object-cover"
         />
       </div>
-      <div className="p-6 flex flex-col justify-between flex-1">
+      <div
+        className={`${
+          compact ? "p-3 md:p-6" : "p-6"
+        } flex flex-col justify-between flex-1`}
+      >
         <div className="flex flex-col items-start mb-2 flex-1 w-full">
           <div>
-            <p className="text-sm md:text-base text-gray-500 mb-1">
+            <p
+              className={`${
+                compact ? "text-xs md:text-base" : "text-sm md:text-base"
+              } text-gray-500 mb-1`}
+            >
               {product.category}
             </p>
-            <h3 className="text-xl md:text-2xl font-semibold text-gray-900">
+            <h3
+              className={`${
+                compact ? "text-base md:text-2xl" : "text-xl md:text-2xl"
+              } font-semibold text-gray-900`}
+            >
               {product.name}
             </h3>
             {product.colors ? (
@@ -106,9 +121,17 @@ export default function ProductCard({
               </Link>
             )}
           </div>
-          <div className={minimalOnMobile ? "hidden md:block" : "block"}>
+          <div
+            className={`mt-auto w-full ${
+              minimalOnMobile ? "hidden md:block" : "block"
+            }`}
+          >
             {product.price > 0 ? (
-              <p className="text-lg md:text-xl font-bold text-gray-900 mt-auto pt-4">
+              <p
+                className={`${
+                  compact ? "text-sm md:text-xl" : "text-lg md:text-xl"
+                } font-bold text-purple-600 mt-auto pt-4`}
+              >
                 ₦{product.price.toLocaleString()}{" "}
                 {product.priceUnit && (
                   <span className="text-sm font-normal text-gray-500">
@@ -143,8 +166,12 @@ export default function ProductCard({
           }
           target="_blank"
           rel="noopener noreferrer"
-          className={`w-full text-center bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 px-4 md:py-3 md:px-6 rounded mt-4 md:mt-6 text-base md:text-lg transition duration-300 flex items-center justify-center gap-2 ${
+          className={`w-full text-center bg-gray-900 hover:bg-gray-800 text-white font-medium rounded mt-4 md:mt-6 transition duration-300 flex items-center justify-center gap-2 ${
             minimalOnMobile ? "hidden md:flex" : "flex"
+          } ${
+            compact
+              ? "py-1.5 px-3 md:py-3 md:px-6 text-xs md:text-lg"
+              : "py-2 px-4 md:py-3 md:px-6 text-base md:text-lg"
           }`}
         >
           Buy Now
